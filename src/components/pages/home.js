@@ -7,5 +7,5 @@ export default function() {
         <h2>HomePage</h2>
         <PortfolioContainer />
     </div>
-  )
+  );
 }

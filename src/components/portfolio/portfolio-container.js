@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import PortfolioItem from './portfolio-item'
 
@@ -9,16 +10,12 @@ export default class PortfolioContainer extends Component {
         this.state = {
             pageTitle: "Welcome to my portfolio",
             isLoading: false,
-            data: [
-            { title: "Secure Recycling", category: "Electronic Recycling", slug: "Secure_Recycling" },
-            { title: "Eventbrite", category: "Scheduling", slug:"Eventbrite" },
-            { title: "Ministry Safe", category: "Enterprise", slug: "MinistrySafe" },
-            { title: "SwingAway", category: "eCommerce", slug: "SwingAway" }
-            ]
+            data: []
         };
         
-        // this.handlePageTitleUpdate = this.handlePageTitleUpdate.bind(this);
+        
         this.handleFilter = this.handleFilter.bind(this);
+        
     }
 
     handleFilter(filter) {
@@ -28,23 +25,38 @@ export default class PortfolioContainer extends Component {
             }),
         });
     }
+
+    getPortfolioItems() {
+        axios
+          .get('https://chriswelfley.devcamp.space/portfolio/portfolio_items')
+          .then(response => {
+            
+            console.log("response data", response);
+            this.setState({ 
+                data: response.data.portfolio_items
+            });
+          })
+          .catch(error => {
+            // handle error
+            console.log(error);
+          });
+    }
     
     portfolioItems() {
         return this.state.data.map(item => {
-            return <PortfolioItem key={item.title} title={item.title} url={"google.com"} slug={item.slug} />;
+            return <PortfolioItem key={"hi"} title={item.title} url={"google.com"} slug={item.slug} />;
         })
     }
 
-    // handlePageTitleUpdate() {
-    //     this.setState({
-    //         pageTitle: "Something Else"
-    //     });
-    // }
+   componentDidMount() {
+       this.getPortfolioItems();
+   }
 
-    render() {
+    render() {        
         if (this.state.isLoading) {
             return <div>Loading...</div>
         }
+        
         return(
             <div>
                 <h2>{this.state.pageTitle}</h2>
