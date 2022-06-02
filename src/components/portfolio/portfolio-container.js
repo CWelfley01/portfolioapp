@@ -37,14 +37,13 @@ export default class PortfolioContainer extends Component {
             });
           })
           .catch(error => {
-            // handle error
             console.log(error);
           });
     }
     
     portfolioItems() {
         return this.state.data.map(item => {
-            return <PortfolioItem key={"hi"} title={item.title} url={"google.com"} slug={item.slug} />;
+            return <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id} />;
         })
     }
 
@@ -61,9 +60,9 @@ export default class PortfolioContainer extends Component {
             <div>
                 <h2>{this.state.pageTitle}</h2>
                 
-                <button onClick={() => this.handleFilter("eCommerce")}>eCommerce</button>
-                <button onClick={() => this.handleFilter("Scheduling")}>Scheduling</button>
-                <button onClick={() => this.handleFilter("Enterprise")}>Enterprise</button>
+                <button onClick={() => this.handleFilter("Games")}>Games</button>
+                <button onClick={() => this.handleFilter("Books")}>Books</button>
+                <button onClick={() => this.handleFilter("Hobbies")}>Hobbies</button>
                 {this.portfolioItems()}
                 {/* <hr /> */}
 
