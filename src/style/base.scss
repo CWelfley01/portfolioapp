@@ -3,3 +3,8 @@ body {
     font-family: 'Joan', serif;
 }
 
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    
+}
