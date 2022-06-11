@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route }  from "react-router-dom";
-
+import axios from 'axios';
 
 import NavigationContainer from './navigation/navigation-container';
 import Home from "./pages/home";
@@ -18,10 +17,11 @@ export default class App extends Component {
 
     this.state = {
       loggedInStatus:"NOT_LOGGED_IN"
-    }
+    };
 
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
+    this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
   }
   handleSuccessfulLogin(){
     this.setState({
@@ -33,7 +33,13 @@ export default class App extends Component {
   handleUnsuccessfulLogin(){
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN"
-    })
+    });
+  }
+
+  handleSuccessfulLogout(){
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN"
+    });
   }
 
 
@@ -69,6 +75,11 @@ export default class App extends Component {
     this.checkLoginStatus();
   }
 
+  authorizedPages(){
+    return [
+      <Route path="/blog" component={Blog}/>
+    ]
+  }
 
 
   render() {
@@ -78,7 +89,10 @@ export default class App extends Component {
         
         <Router>
           <div>
-            <NavigationContainer />
+            <NavigationContainer 
+            loggedInStatus={this.state.loggedInStatus} 
+            handleSuccessfulLogout={this.handleSuccessfulLogout}
+            />
             <h2>{this.state.loggedInStatus}</h2>
             <Switch>
              <Route exact path="/" component={Home}/>
@@ -98,9 +112,13 @@ export default class App extends Component {
 
              <Route path="/contact" component={Contact}/>
 
-             <Route path="/blog" component={Blog}/>
+             {this.state.loggedInStatus === "LOGGED_IN" ? (
+              this.authorizedPages()
+              ): null}
 
-             <Route exact path="/portfolio/:slug" component={PortfolioDetail}/>
+             <Route exact path="/portfolio/:slug"
+              component={PortfolioDetail}
+              />
 
              <Route component={NoMatch} />
             </Switch>
