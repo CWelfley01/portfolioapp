@@ -37,7 +37,7 @@ export default class PortfolioForm extends Component {
     this.handleThumbDrop = this.handleThumbDrop.bind(this);
     this.handleBannerDrop = this.handleBannerDrop.bind(this);
     this.handleLogoDrop = this.handleLogoDrop.bind(this);
-    this.deleteImage =this.deleteImage.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
 
 
     this.thumbRef = React.createRef();
@@ -50,7 +50,8 @@ export default class PortfolioForm extends Component {
   deleteImage(imageType){
     axios
       .delete( 
-        `https://chriswelfley.devcamp.space/portfolio/delete-portfolio-image/${this.state.id}?image_type=${imageType}`, 
+        `https://chriswelfley.devcamp.space/portfolio/delete-portfolio-image/
+        ${this.state.id}?image_type=${imageType}`, 
       {withCredentials: true}
     )
     .then(response => {
@@ -59,7 +60,7 @@ export default class PortfolioForm extends Component {
       });
     }).catch(error => {
       console.log("deleteImage error", error);
-    })
+    });
 
   }
 
@@ -97,6 +98,11 @@ export default class PortfolioForm extends Component {
     }
   }
 
+ handleThumbDrop(){
+    return{
+        addedfile: file => this.setState({thumb_image: file })
+    };
+  }
   handleBannerDrop(){
     return{
         addedfile: file => this.setState({banner_image: file })
@@ -105,21 +111,17 @@ export default class PortfolioForm extends Component {
 
   handleLogoDrop(){
     return{
-        addedfile: file => this.setState({logo_image: file })
+        addedfile: file => this.setState({logo: file })
     };
   }
 
-  handleThumbDrop(){
-    return{
-        addedfile: file => this.setState({thumb_image: file })
-    };
-  }
+ 
 
   componentConfig(){
     return{
         iconFiletypes: [".jpg",".png"],
         showFiletypeIcon: true,
-        postUrl: "https:///httpbin.org/post"
+        postUrl: "https://httpbin.org/post"
     }
   }
 
@@ -147,8 +149,8 @@ export default class PortfolioForm extends Component {
         formData.append("portfolio_item[banner_image]", this.state.banner_image);
     }
 
-    if (this.state.logo_image) {
-        formData.append("portfolio_item[logo_image]", this.state.logo_image);
+    if (this.state.logo) {
+        formData.append("portfolio_item[logo]", this.state.logo);
     }
 
     
@@ -199,7 +201,7 @@ export default class PortfolioForm extends Component {
         
     }).catch(error =>{
       console.log("portfolio form handle submit error", error);
-    })    
+    }) ;   
     event.preventDefault();
   }
   
@@ -327,6 +329,6 @@ export default class PortfolioForm extends Component {
           
       </form>
       
-    )
+    );
   }
 }
