@@ -3,8 +3,15 @@ import profilePicture from "../../../static/assets/images/auth/Dragonzord5.jpg"
 
 export default function () {
   return (
-    < className="content-page-wrapper">
-      <div className="left-column"/>
+    <div className="content-page-wrapper">
+      <div 
+      className="left-column"
+      style={{ 
+        background: "url(" + profilePicture + ") no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}
+        />
       
       <div className="right-column">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel
