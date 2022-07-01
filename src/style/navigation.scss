@@ -22,7 +22,7 @@
     }
     .nav-link-wrapper{
         height:22px;
-        border-bottom: 1px solid transparent;
+        
         transition:0.5s ease-in-out;
         margin-right: 20px;
         text-transform: uppercase;
@@ -32,21 +32,23 @@
         a {
             color: $grey;
             text-decoration: none;
+            border-bottom: 1px solid transparent;
             &:hover{
-                color: black;
+                border-bottom: 1px solid black;
             }
         }
 
-        &:hover{
-            border-bottom: 1px solid black;
-        }
+       
         
         .nav-link-active{
-            border-bottom: 1px solid black;   
             color: black;
-            
-            
-            
+            border-bottom:1px solid black;           
+        }
+        
+        .auth-link-active{
+            color: black;
+            margin-right: 20px;  
+                     
         }
     }
 }

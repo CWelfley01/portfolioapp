@@ -109,7 +109,7 @@ class Blog extends Component {
     this.getBlogItems();
   }
 
-  componentWillUnmount() {
+  componentDidUnmount() {
     window.removeEventListener("scroll", this.onScroll, false);
   }
 

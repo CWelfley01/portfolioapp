@@ -1,8 +1,8 @@
-import React from 'react'
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 import { withRouter } from "react-router";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NavigationContainer = (props) => {
   const dynamicLink = (route, linkText) => {
@@ -13,56 +13,73 @@ const NavigationContainer = (props) => {
         </NavLink>
       </div>
     );
-  };     
-  
-  const handleSignOut = () => {
-    axios.delete("https://api.devcamp.space/logout",
-     { withCredentials: true }).then(response => {
-      if(response.status ===200) {
-        props.history.push("/");
-        props.handleSuccessfulLogout();
-      }
-      return response.data;
-     }).catch(error => {
-      console.log("Error signing out", error);
-     })
   };
-            
-    return (
+
+  const handleSignOut = () => {
+    axios
+      .delete("https://api.devcamp.space/logout", { withCredentials: true })
+      .then((response) => {
+        if (response.status === 200) {
+          props.history.push("/");
+          props.handleSuccessfulLogout();
+        }
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("Error signing out", error);
+      });
+  };
+  const fontSize = {
+    fontSize: "1.2em",
+  };
+
+  return (
     <div className="nav-wrapper">
       <div className="left-side">
         <div className="nav-link-wrapper">
-          <NavLink exact to="/" activeClassName="nav-link-active">Home</NavLink>
+          <NavLink exact to="/" activeClassName="nav-link-active">
+            Home
+          </NavLink>
         </div>
-        <div className="nav-link-wrapper">  
-          <NavLink to="about-me" activeClassName="nav-link-active">About</NavLink>
+        <div className="nav-link-wrapper">
+          <NavLink to="/about-me" activeClassName="nav-link-active">
+            About
+          </NavLink>
         </div>
-        <div className="nav-link-wrapper">  
-          <NavLink to="contact" activeClassName="nav-link-active">Contact</NavLink>
+        <div className="nav-link-wrapper">
+          <NavLink to="/contact" activeClassName="nav-link-active">
+            Contact
+          </NavLink>
         </div>
-        <div className="nav-link-wrapper">  
-          <NavLink to="blog" activeClassName="nav-link-active">Blog</NavLink>
+        <div className="nav-link-wrapper">
+          <NavLink exact to="/blog" activeClassName="nav-link-active">
+            Blog
+          </NavLink>
         </div>
-        {props.loggedInStatus === "LOGGED_IN" ? (
-          dynamicLink("/portfolio-manager", "Portfolio Manager")
-          ) : null}  
+        {props.loggedInStatus === "LOGGED_IN"
+          ? dynamicLink("/portfolio-manager", "Portfolio Manager")
+          : null}
       </div>
-        
-        
+
       <div className="right-side">
-        CHRISTOPHER WELFLEY
-        {props.loggedInStatus === "LOGGED_IN" ? (
-        <a onClick={handleSignOut}> 
-        
-        <FontAwesomeIcon icon="sign-out-alt" />
-        </a> 
-        ): null}
+        <div className="nav-link-wrapper">
+          <NavLink
+            to="auth"
+            activeClassName="auth-link-active"
+            style={fontSize}
+          >
+            CHRISTOPHER WELFLEY
+          </NavLink>
+
+          {props.loggedInStatus === "LOGGED_IN" ? (
+            <a onClick={handleSignOut}>
+              <FontAwesomeIcon icon="sign-out-alt" />
+            </a>
+          ) : null}
+        </div>
       </div>
-        
     </div>
-      
-    );
-  }
+  );
+};
 
-  export default withRouter(NavigationContainer);
-
+export default withRouter(NavigationContainer);

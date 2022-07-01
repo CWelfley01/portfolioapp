@@ -49,7 +49,8 @@ export default class PortfolioDetail extends Component {
     };
 
     const logoStyles ={
-      width: "200px,"
+      width: "200px",
+      
     };
 
     return (
